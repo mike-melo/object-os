@@ -7,7 +7,7 @@ build-kernel:
 	dd if=build/kernel.bin of=build/kernel.img conv=notrunc
 
 launch:
-	VBoxManage startvm ObjectOS
+	VirtualBox --dbg -startvm ObjectOS &
 
 init: create-dirs basegen
 
