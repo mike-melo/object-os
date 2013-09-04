@@ -8,42 +8,52 @@ start:
 
 	mov ax, 07C0h		; Set data segment to where we're loaded
 	mov ds, ax
+	mov es, ax
 
 	mov si, welcome_string	; Put string position into SI
 	call print_string	; Call our string-printing routine
 	
 	call cli
+	call print_string
 	hlt
 	
 	welcome_string db 'Welcome to ObjectOS 0.0.1!', 13, 10, 0
+	prompt db 13, 10, '?', 0
+	input_buffer resb 16
+	db 0
 
 cli:
-
-	call show_prompt
+	mov cx, 16	      ; Our input buffer limit
+	mov di, input_buffer
+	mov si, prompt
+	call print_string
 
 .echo_loop:
 	call echo
 	jmp .echo_loop
 	ret
 
-show_prompt:
-	mov ah, 0EH
-	mov al, '?'
-	int 10h
-	ret
-
 echo:
 	call get_keystroke
-	cmp al,13
+	cmp al, 13
 	je .newline
+	cmp cx, 0
+	je .printchar
+	stosb
+	dec cx
+
+.printchar:
 	call print_char
 	ret
-.newline
-	mov al,13
+
+.newline:
+	mov al, 13
 	call print_char
-	mov al,10
+	mov al, 10
 	call print_char
-	call show_prompt	
+	mov si, input_buffer
+	call print_string
+	call cli	
 	ret
 
 get_keystroke:
