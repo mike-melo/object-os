@@ -62,15 +62,13 @@ echo:
 
 clear_string:
 	cmp cx, 0
-	je .string_cleared
+	je .done
 	mov al, 0
 	stosb
 	dec cx
 	jmp clear_string
-	
-.string_cleared:
-	ret
-
+.done:
+	ret	
 get_keystroke:
 	mov ah, 00h
 	int 16h
