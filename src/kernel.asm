@@ -13,7 +13,7 @@ start:
 	call print_string	; Call our string-printing routine
 	
 	call cli
-	jmp $
+	hlt
 	
 	welcome_string db 'Welcome to ObjectOS 0.0.1!', 13, 10, 0
 
