@@ -9,15 +9,52 @@ start:
 	mov ax, 07C0h		; Set data segment to where we're loaded
 	mov ds, ax
 
-
-	mov si, text_string	; Put string position into SI
+	mov si, welcome_string	; Put string position into SI
 	call print_string	; Call our string-printing routine
+	
+	call cli
+	jmp $
+	
+	welcome_string db 'Welcome to ObjectOS 0.0.1!', 13, 10, 0
 
-	jmp $			; Jump here - infinite loop!
+cli:
 
+	call show_prompt
 
-	text_string db 'This is my cool new OS!', 0
+.echo_loop:
+	call echo
+	jmp .echo_loop
+	ret
 
+show_prompt:
+	mov ah, 0EH
+	mov al, '?'
+	int 10h
+	ret
+
+echo:
+	call get_keystroke
+	cmp al,13
+	je .newline
+	call print_char
+	ret
+.newline
+	mov al,13
+	call print_char
+	mov al,10
+	call print_char
+	call show_prompt	
+	ret
+
+get_keystroke:
+	mov ah, 00h
+	int 16h
+	ret
+
+print_char:
+	mov ah, 0Eh
+	int 10h
+	ret
 
 print_string:			; Routine: output string in SI to screen
 	mov ah, 0Eh		; int 10h 'print char' function
