@@ -25,6 +25,10 @@ start:
 cli:
 	mov cx, 16	      ; Our input buffer limit
 	mov di, input_buffer
+	call clear_string
+
+	mov cx, 16
+	mov di, input_buffer
 	mov si, prompt
 	call print_string
 
@@ -54,6 +58,17 @@ echo:
 	mov si, input_buffer
 	call print_string
 	call cli	
+	ret
+
+clear_string:
+	cmp cx, 0
+	je .string_cleared
+	mov al, 0
+	stosb
+	dec cx
+	jmp clear_string
+	
+.string_cleared:
 	ret
 
 get_keystroke:
