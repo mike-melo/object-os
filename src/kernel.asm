@@ -33,7 +33,7 @@ new_object:
 	;Prepare our next object
 	mov bx, [next_object]
 	mov cx, [next_object]
-	add cx, 10 
+	add cx, 16 
 	mov [next_object],cx
 	
 	;Make the object out of whatever is in SI and store it in our object heap
