@@ -12,7 +12,7 @@ start:
 
 	mov si, welcome_string	; Put string position into SI
 	call print_string	; Call our string-printing routine
-	
+
 	call cli
 	call print_string
 	hlt
@@ -21,6 +21,42 @@ start:
 	prompt db 13, 10, '?', 0
 	input_buffer resb 16
 	db 0
+	next_object dw 0
+
+new_object:
+	push si
+	push cx 
+	push dx
+	push es
+	
+	;Prepare our next object
+	mov bx, [next_object]
+	mov cx, [next_object]
+	add cx, 10 
+	mov [next_object],cx
+	
+	;Make the object out of whatever is in SI and store it in our object heap
+	mov dx, 019ch
+	mov es, dx
+	mov di, bx
+	
+	mov cx, 16
+
+.copy:
+	cmp cx, 0
+	je .done
+	mov al,[si]
+	inc si
+	stosb
+	dec cx
+	jmp .copy
+
+.done:
+	pop es
+	pop dx
+	pop cx 
+	pop si 
+	ret
 
 cli:
 	mov cx, 16	      ; Our input buffer limit
@@ -56,6 +92,7 @@ echo:
 	mov al, 10
 	call print_char
 	mov si, input_buffer
+	call new_object
 	call print_string
 	call cli	
 	ret
