@@ -23,6 +23,7 @@ start:
 	db 0
 	next_object dw 0
 
+;The handle for the new object is returned in bx
 new_object:
 	push si
 	push cx 
