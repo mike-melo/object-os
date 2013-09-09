@@ -21,6 +21,8 @@ start:
 	prompt db 13, 10, '?', 0
 	input_buffer resb 16
 	db 0
+	parse_token resb 16
+	db 0
 	next_object dw 0
 
 ;The handle for the new object is returned in bx
@@ -59,6 +61,39 @@ new_object:
 	pop si 
 	ret
 
+parse_string:
+	push di
+	push bx
+	mov di, parse_token
+.loop:
+	lodsb
+	cmp al,'"'
+	je .done
+	stosb
+	jmp .loop
+.done:
+	mov bx, si	
+	mov si, parse_token
+	call new_object
+	mov si, bx
+	pop bx
+	pop di
+	ret
+
+parse:
+	push si
+.loop:
+	lodsb			
+	cmp al, 0 
+	je .done
+	cmp al,'"'
+	jne .loop
+	call parse_string
+	jmp .loop
+.done: 
+	pop si
+	ret
+
 cli:
 	mov cx, 16	      ; Our input buffer limit
 	mov di, input_buffer
@@ -93,8 +128,7 @@ echo:
 	mov al, 10
 	call print_char
 	mov si, input_buffer
-	call new_object
-	call print_string
+	call parse
 	call cli	
 	ret
 
