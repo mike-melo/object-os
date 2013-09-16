@@ -67,7 +67,7 @@ parse_string:
 	mov di, parse_token
 .loop:
 	lodsb
-	cmp al,'"'
+	cmp al, '"'
 	je .done
 	stosb
 	jmp .loop
@@ -86,8 +86,13 @@ parse:
 	lodsb			
 	cmp al, 0 
 	je .done
+	;This check is to make sure we don't exceed of buffer limit
+	cmp cx, 0
+	je .done
+	dec cx
 	cmp al,'"'
 	jne .loop
+	
 	call parse_string
 	jmp .loop
 .done: 
@@ -99,10 +104,12 @@ cli:
 	mov di, input_buffer
 	call clear_string
 
-	mov cx, 16
 	mov di, input_buffer
 	mov si, prompt
 	call print_string
+
+	;Get our input buffer max setup
+	mov cx, 16
 
 .echo_loop:
 	call echo
@@ -113,6 +120,7 @@ echo:
 	call get_keystroke
 	cmp al, 13
 	je .newline
+	;If we have got to 0, that means don't store anymore
 	cmp cx, 0
 	je .printchar
 	stosb
