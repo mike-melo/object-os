@@ -1,8 +1,11 @@
 
 all: clean init build-kernel launch
 
-build-source:
-	../nasm-2.10.09/nasm -f bin -o build/kernel.bin src/kernel.asm
+link-modules:
+	cat src/header.asm src/modules/*.asm src/tail.asm > build/kernel.asm
+
+build-source: link-modules
+	../nasm-2.10.09/nasm -f bin -o build/kernel.bin build/kernel.asm
 
 build-kernel: build-source
 	cp build/base.img build/kernel.img
