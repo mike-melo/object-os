@@ -7,8 +7,8 @@ cli:
         mov si, prompt
         call print_string
 
-        ;Get our input buffer max setup
-        mov cx, 16
+        ;Input size starts at 0
+	mov dx, 0 
 
 .echo_loop:
         call echo
@@ -19,11 +19,8 @@ echo:
         call get_keystroke
         cmp al, 13
         je .newline
-        ;If we have got to 0, that means don't store anymore
-        cmp cx, 0
-        je .printchar
         stosb
-        dec cx
+        inc dx
 
 .printchar:
         call print_char
@@ -35,6 +32,7 @@ echo:
         mov al, 10
         call print_char
         mov si, input_buffer
-        call parse
+     	sub dx,2
+	call parse
         call cli
         ret

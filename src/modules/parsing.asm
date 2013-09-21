@@ -1,6 +1,7 @@
 parse_string:
         push di
         push bx
+	push ax
         mov di, parse_token
 .loop:
         lodsb
@@ -11,9 +12,12 @@ parse_string:
 .done:
         mov bx, si
         mov si, parse_token
-        call new_object
+        mov ax, dx 
+	call new_object
         mov si, bx
-        pop bx
+       
+	pop ax
+	pop bx
         pop di
         ret
 
@@ -24,9 +28,9 @@ parse:
         cmp al, 0 
         je .done
         ;This check is to make sure we don't exceed of buffer limit
-        cmp cx, 0
-        je .done
-        dec cx
+        ;cmp cx, 0
+        ;je .done
+        ;dec cx
         cmp al,'"'
         jne .loop
 

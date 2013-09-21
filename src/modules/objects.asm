@@ -8,7 +8,7 @@ new_object:
         ;Prepare our next object
         mov bx, [next_object]
         mov cx, [next_object]
-        add cx, 16
+        add cx, ax 
         mov [next_object],cx
 
         ;Make the object out of whatever is in DS:SI and store it in our object heap
@@ -16,7 +16,7 @@ new_object:
         mov es, dx
         mov di, bx
 
-        mov cx, 16
+        mov cx, ax 
 
 .copy:
         cmp cx, 0
