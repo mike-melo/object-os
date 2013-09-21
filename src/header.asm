@@ -19,8 +19,8 @@ start:
 
         welcome_string db 'Welcome to ObjectOS 0.0.1!', 13, 10, 0
         prompt db 13, 10, '?', 0
-        input_buffer resb 16
+        input_buffer resb 64 
         db 0
-        parse_token resb 16
+        parse_token resb 64
         db 0
         next_object dw 0
