@@ -1,7 +1,7 @@
 parse_string:
         push di
-        push bx
 	push ax
+
         mov di, parse_token
 .loop:
         lodsb
@@ -9,27 +9,25 @@ parse_string:
         je .done
         stosb
         jmp .loop
+
 .done:
-        mov bx, si
-        mov si, parse_token
-	
-	mov ax, dx
+	push parse_token	
+	push dx
 	call new_object
-        
-	mov si, bx
-       
+	
 	pop ax
-	pop bx
         pop di
         ret
 
 parse:
 	push bp
 	push si
+	push dx
 	
 	mov bp, sp
-	mov dx, [bp+6]
-	mov si, [bp+8]
+
+	mov dx, [bp+8]
+	mov si, [bp+10]
 
 .loop:
 	lodsb
@@ -42,6 +40,7 @@ parse:
 	jmp .loop
 
 .done:
+	pop dx
 	pop si
 	pop bp
-	ret
+	ret 4

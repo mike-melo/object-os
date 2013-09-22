@@ -1,8 +1,4 @@
 cli:
-	push ax
-	push dx	
-	push di
-	
 	push input_buffer
 	push 16
         call clear_string
@@ -17,7 +13,7 @@ cli:
 .echo_loop:
         call echo
         jmp .echo_loop
-        ret
+	ret
 
 echo:
         call get_keystroke
@@ -35,15 +31,11 @@ echo:
         call print_char
         mov al, 10
         call print_char
-        mov si, input_buffer
      	sub dx, 2
 	
-	push input_buffer
+	push input_buffer 
 	push dx
 	call parse
         call cli
 
-	pop ax
-	pop dx
-	pop di
         ret

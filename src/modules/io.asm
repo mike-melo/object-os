@@ -29,7 +29,7 @@ clear_string:
 	pop di
 	pop cx
 	pop bp
-	ret
+	ret 4
 
 print_string:
 	push bp
@@ -52,4 +52,4 @@ print_string:
 	pop ax
 	pop si
 	pop bp
-	ret
+	ret 2
