@@ -9,25 +9,47 @@ print_char:
         ret
 
 clear_string:
-        cmp cx, 0
-        je .done
-        mov al, 0
-        stosb
-        dec cx
-        jmp clear_string
-.done:
-        ret
+	push bp
+	push cx
+	push di
 
-print_string:                   ; Routine: output string in SI to screen
-        mov ah, 0Eh             ; int 10h 'print char' function
+	mov bp, sp
+	mov cx, [bp+8]
+	mov di, [bp+10]
 
-.repeat:
-        lodsb                   ; Get character from string
-        cmp al, 0
-        je .done                ; If char is zero, end of string
-        int 10h                 ; Otherwise, print it
-        jmp .repeat
+.loop:
+	cmp cx, 0
+	je .done
+	mov al, 0
+	stosb
+	dec cx
+	jmp .loop 
 
-.done:
-        ret
+.done
+	pop di
+	pop cx
+	pop bp
+	ret
 
+print_string:
+	push bp
+	push si
+	push ax
+
+	mov bp, sp
+	mov si, [bp+8]
+	
+	mov ah, 0Eh
+
+.repeat
+	lodsb
+	cmp al, 0
+	je .done
+	int 10h
+	jmp .repeat
+
+.done
+	pop ax
+	pop si
+	pop bp
+	ret

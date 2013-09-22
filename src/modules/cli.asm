@@ -1,14 +1,18 @@
 cli:
-        mov cx, 16            ; Our input buffer limit
-        mov di, input_buffer
+	push ax
+	push dx	
+	push di
+	
+	push input_buffer
+	push 16
         call clear_string
 
-        mov di, input_buffer
-        mov si, prompt
+        push prompt
         call print_string
 
         ;Input size starts at 0
 	mov dx, 0 
+	mov di, input_buffer
 
 .echo_loop:
         call echo
@@ -32,7 +36,14 @@ echo:
         mov al, 10
         call print_char
         mov si, input_buffer
-     	sub dx,2
+     	sub dx, 2
+	
+	push input_buffer
+	push dx
 	call parse
         call cli
+
+	pop ax
+	pop dx
+	pop di
         ret

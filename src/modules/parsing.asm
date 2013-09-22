@@ -12,9 +12,11 @@ parse_string:
 .done:
         mov bx, si
         mov si, parse_token
-        mov ax, dx 
+	
+	mov ax, dx
 	call new_object
-        mov si, bx
+        
+	mov si, bx
        
 	pop ax
 	pop bx
@@ -22,20 +24,24 @@ parse_string:
         ret
 
 parse:
-        push si
-.loop:
-        lodsb
-        cmp al, 0 
-        je .done
-        ;This check is to make sure we don't exceed of buffer limit
-        ;cmp cx, 0
-        ;je .done
-        ;dec cx
-        cmp al,'"'
-        jne .loop
+	push bp
+	push si
+	
+	mov bp, sp
+	mov dx, [bp+6]
+	mov si, [bp+8]
 
-        call parse_string
-        jmp .loop
+.loop:
+	lodsb
+	cmp al, 0
+	je .done
+	cmp al,'"'
+	jne .loop
+	
+	call parse_string
+	jmp .loop
+
 .done:
-        pop si
-        ret
+	pop si
+	pop bp
+	ret

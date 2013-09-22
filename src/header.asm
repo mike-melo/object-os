@@ -10,11 +10,9 @@ start:
         mov ds, ax
         mov es, ax
 
-        mov si, welcome_string  ; Put string position into SI
-        call print_string       ; Call our string-printing routine
-
+	push welcome_string
+	call print_string
         call cli
-        call print_string
         hlt
 
         welcome_string db 'Welcome to ObjectOS 0.0.1!', 13, 10, 0
