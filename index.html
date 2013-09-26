@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Object-os by mike-melo</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Object-os</h1>
+        <p>An object-oriented based OS written from scratch in x86 Assembly</p>
+        <p class="view"><a href="https://github.com/mike-melo/object-os">View the Project on GitHub <small>mike-melo/object-os</small></a></p>
+        <ul>
+          <li><a href="https://github.com/mike-melo/object-os/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/mike-melo/object-os/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/mike-melo/object-os">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h3>
+<a name="what-is-objectos-and-what-is-its-goals" class="anchor" href="#what-is-objectos-and-what-is-its-goals"><span class="octicon octicon-link"></span></a>What is ObjectOS and what is its goals?</h3>
+
+<ul>
+<li>An experiment</li>
+<li>A learning experience on how to write a micro-kernel OS in x86 16-bit (for now) assembly from the ground up</li>
+<li>An attempt at introducing object constructs into an OS as early as possible and to see how it works</li>
+<li>Create a very basic object-oriented language that is essentially the CLI and interface for a programmer</li>
+<li>Have a good time writing it</li>
+</ul><h3>
+<a name="some-high-level-functionality-being-aimed-for-to-get-things-going" class="anchor" href="#some-high-level-functionality-being-aimed-for-to-get-things-going"><span class="octicon octicon-link"></span></a>Some high level functionality being aimed for to get things going</h3>
+
+<ul>
+<li>A basic two-stage bootloader for the kernel (DONE)</li>
+<li>A basic CLI (DONE)</li>
+<li>A build process that integrates with VirtualBox to allow for easy regression and testing</li>
+<li>Dynamic module loading and registry to allow interaction between modules (ie calling of procedures)</li>
+<li>Breaking things down into modules that make sense for reuse</li>
+<li>A language construct that allows for the creation of primitive string objects (DONE)</li>
+<li>A very primitive dynamic heap (DONE)</li>
+<li>Ability to associate labels or variable names with a created object</li>
+<li>Storing captured input into an object</li>
+<li>Some basic arithmetic operations where the result can be stored and referenced</li>
+<li>A method like construct that can be attached to objects</li>
+</ul><p>The aim at this stage is to have a primitive CLI/language/API and some basic building blocks for a programmer to build on top of. </p>
+
+<p>Ambitious? You betcha! But having a basic roadmap and some fun is a good start!</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/mike-melo">mike-melo</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
