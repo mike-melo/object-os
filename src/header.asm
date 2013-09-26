@@ -1,14 +1,14 @@
 BITS 16
 
 start:
-        mov ax, 07C0h           ; Set up 4K stack space after this bootloader
-        add ax, 288             ; (4096 + 512) / 16 bytes per paragraph
-        mov ss, ax
-        mov sp, 4096
 
-        mov ax, 07C0h           ; Set data segment to where we're loaded
+	;The bootloader has initalized ax to our memory location
         mov ds, ax
         mov es, ax
+
+	add ax, 288             
+        mov ss, ax
+        mov sp, 4096
 
 	push welcome_string
 	call print_string
