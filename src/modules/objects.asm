@@ -16,7 +16,7 @@ new_object:
         mov [next_object], cx
 
         ;Make the object out of whatever is in DS:SI and store it in our object heap
-        mov dx, 08e1h
+        mov dx, 7e0h
         mov es, dx
         mov di, bx
 
