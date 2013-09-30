@@ -1,6 +1,19 @@
 
 all: clean init build-kernel launch
 
+link-tests:
+	cat src/test/fixture.asm src/test/$(test).asm src/modules/$(module).asm > build/kernel.asm
+
+build-tests: link-tests 
+	../nasm-2.10.09/nasm -f bin -o build/kernel.bin build/kernel.asm
+
+build-tests-kernel: build-tests build-boot link-kernel-and-boot
+	cp build/base.img build/kernel.img
+	dd if=build/boot-kernel.bin of=build/kernel.img conv=notrunc
+
+launch-tests: build-tests-kernel launch
+
+
 link-modules:
 	cat src/header.asm src/modules/*.asm > build/kernel.asm
 
