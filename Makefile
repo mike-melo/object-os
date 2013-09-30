@@ -1,7 +1,17 @@
 
 all: clean init build-kernel launch
 
-link-tests:
+check-for-test:
+ifndef test
+	$(error 'test' is undefined)
+endif
+
+check-for-module:
+ifndef module
+	$(error 'module' is undefined)
+endif
+
+link-tests: check-for-test check-for-module
 	cat src/test/fixture.asm src/test/$(test).asm src/modules/$(module).asm > build/kernel.asm
 
 build-tests: link-tests 
