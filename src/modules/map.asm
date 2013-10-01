@@ -3,10 +3,6 @@ module_name db 'mdl_map', 0
 
 value_object dw 20 
  
-;push module_name 
-;push value_object 
-;call map_put
-
 get_string_hash:
 	push bp
 	mov bp, sp
@@ -22,12 +18,14 @@ get_string_hash:
 	lodsb
 	cmp al, 0
 	je .done
-	add cx,ax
+	add cx, ax 
 	jmp .loop
 
 .done:
-	mov ax, 31
-	mul cx
+	mov ax, cx
+	shl cx, 5
+	sub cx, ax 
+	
 	pop si
 	pop ax
 	pop bp
