@@ -1,8 +1,6 @@
 
 module_name db 'mdl_map', 0
 
-value_object dw 20 
-
 map_array resw 16
  
 get_hashcode:
@@ -58,7 +56,6 @@ map_put:
 	shl bx, 1
 	mov dx, [bp+4]
 	mov word [map_array+bx], dx 
-	mov di, map_array
 
 	pop ax	
 	pop cx
