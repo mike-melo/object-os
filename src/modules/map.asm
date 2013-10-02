@@ -2,13 +2,16 @@
 module_name db 'mdl_map', 0
 
 value_object dw 20 
+
+map_array resw 16
  
-get_string_hash:
+get_hashcode:
 	push bp
 	mov bp, sp
 
 	push ax
 	push si
+	push bx
 	
 	mov si, [bp+4]
 	xor cx, cx
@@ -22,10 +25,11 @@ get_string_hash:
 	jmp .loop
 
 .done:
-	mov ax, cx
-	shl cx, 5
-	sub cx, ax 
-	
+	mov bx, cx
+	shl cx, 1 
+	add cx, bx 
+
+	pop bx	
 	pop si
 	pop ax
 	pop bp
@@ -37,10 +41,27 @@ map_put:
 	
 	push bx
 	push dx	
+	push cx
+	push ax
 
-	mov bx, [bp+4] ;value_object
 	mov dx, [bp+6] ;key_object
 
+	push dx
+	call get_hashcode
+
+	xor dx, dx
+	mov ax, cx
+	mov cx, 16
+	div cx
+
+	mov bx, dx
+	shl bx, 1
+	mov dx, [bp+4]
+	mov word [map_array+bx], dx 
+	mov di, map_array
+
+	pop ax	
+	pop cx
 	pop dx
 	pop bx
 
