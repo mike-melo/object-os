@@ -1,12 +1,12 @@
 get_keystroke:
-        mov ah, 00h
-        int 16h
-        ret
+    mov ah, 00h
+    int 16h
+    ret
 
 print_char:
-        mov ah, 0Eh
-        int 10h
-        ret
+    mov ah, 0Eh
+    int 10h
+    ret
 
 clear_string:
 	push bp
@@ -23,7 +23,7 @@ clear_string:
 	mov al, 0
 	stosb
 	dec cx
-	jmp .loop 
+	jmp .loop
 
 .done
 	pop di
@@ -38,7 +38,7 @@ print_string:
 
 	mov bp, sp
 	mov si, [bp+8]
-	
+
 	mov ah, 0Eh
 
 .repeat

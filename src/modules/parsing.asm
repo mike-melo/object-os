@@ -1,29 +1,29 @@
 parse_string:
-        push di
+    push di
 	push ax
 
-        mov di, parse_token
+    mov di, parse_token
 .loop:
-        lodsb
-        cmp al, '"'
-        je .done
-        stosb
-        jmp .loop
+    lodsb
+    cmp al, '"'
+    je .done
+    stosb
+    jmp .loop
 
 .done:
-	push parse_token	
+	push parse_token
 	push dx
 	call new_object
-	
+
 	pop ax
-        pop di
-        ret
+    pop di
+    ret
 
 parse:
 	push bp
 	push si
 	push dx
-	
+
 	mov bp, sp
 
 	mov dx, [bp+8]
@@ -35,12 +35,13 @@ parse:
 	je .done
 	cmp al,'"'
 	jne .loop
-	
+
 	call parse_string
 	jmp .loop
-
+	
 .done:
 	pop dx
 	pop si
 	pop bp
 	ret 4
+	

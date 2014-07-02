@@ -1,41 +1,45 @@
 cli:
+    push dx
+    push di
+
 	push input_buffer
 	push 16
-        call clear_string
+    call clear_string
 
-        push prompt
-        call print_string
+    push prompt
+    call print_string
 
-        ;Input size starts at 0
-	mov dx, 0 
+    ;Input size starts at 0
+	mov dx, 0
 	mov di, input_buffer
 
 .echo_loop:
-        call echo
-        jmp .echo_loop
-	ret
+    jmp .echo
 
-echo:
-        call get_keystroke
-        cmp al, 13
-        je .newline
-        stosb
-        inc dx
-
-.printchar:
-        call print_char
-        ret
+.echo:
+    call get_keystroke
+    cmp al, 13
+    je .newline
+    stosb
+    inc dx
+    call print_char
+    jmp .echo_loop
 
 .newline:
-        mov al, 13
-        call print_char
-        mov al, 10
-        call print_char
-     	sub dx, 2
-	
-	push input_buffer 
+    mov al, 13
+    call print_char
+    mov al, 10
+    call print_char
+    sub dx, 2
+
+    push input_buffer
 	push dx
 	call parse
-        call cli
+    jmp .done
 
-        ret
+.done:
+    pop di
+	pop dx
+
+    ret
+	
