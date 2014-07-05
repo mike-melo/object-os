@@ -2,40 +2,46 @@ map_array resw 16
 
 
 get_hashcode:
-	;call custom_hash
-	call print_string
+	call custom_hash
 	ret
 
+;Need 32-bits for this
 djb2_hash:
 	push bp
-        mov bp, sp
+    mov bp, sp
 
-        push ax
-        push si
-        push bx
+    ;push ax
+	;push si
+    ;push bx
 
-        mov si, [bp+4]
-        mov cx, 5381 
+    mov si, [bp+4]
+    mov cx, 5381 
+	xor dx, dx
 
 .loop:
-        xor ax, ax
-        lodsb
-        cmp al, 0
-        je .done
+    xor ax, ax
+    lodsb
+    cmp al, 0
+    je .done
+	inc dx
 	mov bx, cx
 	shl cx, 5
 	add cx, bx
-        add cx, ax
-        jmp .loop
+    add cx, ax
+    jmp .loop
 
 .done:
-
-        pop bx
-        pop si
-        pop ax
-        pop bp
-        ret 2
 	
+    ;pop bx
+    ;pop si
+    ;pop ax
+    pop bp
+    ret 2
+	
+; while (c = *str++) {    
+;  hash += c
+; }
+; return hash + (hash << 1)
 
 custom_hash:
 	push bp
