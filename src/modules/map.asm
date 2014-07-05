@@ -2,7 +2,8 @@ map_array resw 16
 
 
 get_hashcode:
-	call custom_hash
+	;call custom_hash
+	call print_string
 	ret
 
 djb2_hash:

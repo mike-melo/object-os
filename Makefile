@@ -1,4 +1,3 @@
-
 all: clean init build-kernel launch
 
 check-for-test:
@@ -11,8 +10,17 @@ ifndef module
 	$(error 'module' is undefined)
 endif
 
+test-target:
+	for dep in $(deps); do \
+	   fulldeps+=src/modules/$$dep.asm" "; \
+	done; \
+	echo $$fulldeps;
+	
 link-tests: check-for-test check-for-module
-	cat src/test/fixture.asm src/test/$(test).asm src/modules/$(module).asm > build/kernel.asm
+	for dep in $(deps); do \
+	   fulldeps+=src/modules/$$dep.asm" "; \
+	done; \
+	cat src/test/fixture.asm src/test/$(test)-test.asm src/modules/$(module).asm $$fulldeps > build/kernel.asm
 
 build-tests: link-tests 
 	../nasm-2.10.09/nasm -f bin -o build/kernel.bin build/kernel.asm
