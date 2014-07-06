@@ -57,27 +57,18 @@ write_object:
 new_object:
 	push bp
 	mov bp, sp
-	
-	push dx
+
 	push bx
 
-	mov bx, [bp+4]
-	push bx
+	push word [bp+4]
 	call alloc_object
 	
-	mov dx, [bp+6]
-	push dx
-	
-	;bx returned from alloc_object is the destination
-	push bx
-	
-	mov bx, [bp+4]
-	push bx
-	
+	push word [bp+6] 		
+	push bx					;bx returned from alloc_object is the destination
+	push word [bp+4]
 	call write_object
 	
 	pop bx
-	pop dx
 	pop bp
 	ret 4
 
