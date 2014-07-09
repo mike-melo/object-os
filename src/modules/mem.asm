@@ -1,14 +1,14 @@
 ;The handle for the new object is returned in bx
-alloc_object:
+mem_alloc:
 	push bp
 	mov bp, sp
 	
 	push cx
 	
-	mov bx, [next_object]
-    mov cx, [next_object]
+	mov bx, [mem_next_alloc]
+    mov cx, [mem_next_alloc]
     add cx, [bp+4]
-    mov [next_object], cx
+    mov [mem_next_alloc], cx
 	
 	pop cx
 	pop bp
@@ -17,7 +17,7 @@ alloc_object:
 ;arg1 [bp+8] -> ptr to source data
 ;arg2 [bp+6] -> ptr to dest data
 ;arg3 [bp+4] -> number of bytes to write
-write_object:
+mem_write:
 	push bp
 	mov bp, sp
 	
@@ -54,25 +54,25 @@ write_object:
 
 ;arg1 [bp+6] -> source
 ;arg2 [bp+4] -> number of bytes to write
-new_object:
+mem_copy:
 	push bp
 	mov bp, sp
 
 	push bx
 
 	push word [bp+4]
-	call alloc_object
+	call mem_alloc
 	
 	push word [bp+6] 		
-	push bx					;bx returned from alloc_object is the destination
+	push bx					;bx returned from mem_alloc is the destination
 	push word [bp+4]
-	call write_object
+	call mem_write
 	
 	pop bx
 	pop bp
 	ret 4
 
-deprecated_new_object:
+deprecated_mem_copy:
 	push bp
     push si
     push cx
@@ -83,10 +83,10 @@ deprecated_new_object:
 	mov si, [bp+14]
 
     ;Prepare our next object
-    mov bx, [next_object]
-    mov cx, [next_object]
+    mov bx, [mem_next_alloc]
+    mov cx, [mem_next_alloc]
     add cx, [bp+12]
-    mov [next_object], cx
+    mov [mem_next_alloc], cx
 
     ;Make the object out of whatever is in DS:SI and store it in our object heap
     mov dx, 7e0h

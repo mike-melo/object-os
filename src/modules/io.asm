@@ -1,14 +1,14 @@
-get_keystroke:
+io_get_keystroke:
     mov ah, 00h
     int 16h
     ret
 
-print_char:
+io_print_char:
     mov ah, 0Eh
     int 10h
     ret
 
-clear_string:
+io_clear_string:
 	push bp
 	push cx
 	push di
@@ -31,7 +31,7 @@ clear_string:
 	pop bp
 	ret 4
 
-print_string:
+io_print_string:
 	push bp
 	push si
 	push ax

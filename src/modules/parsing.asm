@@ -13,7 +13,7 @@ parse_string:
 .done:
 	push parse_token
 	push dx
-	call new_object
+	call mem_copy
 
 	pop ax
     pop di
