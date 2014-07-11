@@ -23,4 +23,4 @@ start:
     db 0
     parse_token resb 64
     db 0
-	mem_next_alloc dw 0
+	

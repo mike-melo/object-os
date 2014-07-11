@@ -1,3 +1,5 @@
+mem_next_alloc dw 0
+
 ;The handle for the new object is returned in bx
 mem_alloc:
 	push bp
