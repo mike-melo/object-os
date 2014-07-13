@@ -1,0 +1,9 @@
+%macro invoke 1-*
+	%define callee %1
+	%rotate 1
+	%rep  %0-1 
+        push    %1 
+	%rotate 1 
+	%endrep
+	call callee	
+%endmacro

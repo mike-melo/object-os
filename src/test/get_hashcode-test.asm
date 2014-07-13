@@ -1,5 +1,5 @@
-	push input
-	call custom_hash
+	invoke custom_hash, input
+
     cmp cx, 31567
 	je success
 	jmp fail

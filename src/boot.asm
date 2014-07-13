@@ -5,7 +5,8 @@ start:
 	push 050h
 	push 2
 	call read_sectors
-    mov ax, 050h         
+   
+	mov ax, 050h         
 
 	jmp 0x0050:0x0000
 

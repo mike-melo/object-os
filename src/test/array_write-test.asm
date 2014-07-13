@@ -1,13 +1,9 @@
-	push 10
-	call array_new
+	invoke array_new, 10
+	
 	push bx
 	
-	push 0
-	push bx
-	push input
-	push 4	
-	call array_write	
-
+	invoke array_write, 0, bx, input, 4
+	
 	;Pop the original address of the array
 	pop bx
 	

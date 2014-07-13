@@ -3,8 +3,10 @@ array_new:
 	push bp
 	mov bp, sp
 	
-	push word [bp+4] 
-	call mem_alloc
+	;push word [bp+4] 
+	;call mem_alloc
+	
+	invoke mem_alloc, word [bp+4]
 	
 	pop bp
 	ret 2
@@ -23,8 +25,7 @@ array_read:
 	mov dx, [bp+6]
 	add dx, [bp+8]
 
-	push word [bp+4]
-	call mem_alloc
+	invoke mem_alloc, word [bp+4]
 	
 	;The assumption is that the source data is in the heap (7e0h)
 
@@ -33,10 +34,7 @@ array_read:
 	mov ds, dx
 	pop dx
 	
-	push dx		
-	push bx					;bx returned from mem_alloc is the destination
-	push word [bp+4]
-	call mem_write
+	invoke mem_write, dx, bx, word [bp+4]
 	
 	pop ds
 	pop dx
@@ -56,10 +54,7 @@ array_write:
 	mov bx, [bp+8]
 	add bx, [bp+10]
 	
-	push word [bp+6] 		
-	push bx
-	push word [bp+4]
-	call mem_write
+	invoke mem_write, word [bp+6], bx, word [bp+4]
 	
 	pop bx
 	pop bp

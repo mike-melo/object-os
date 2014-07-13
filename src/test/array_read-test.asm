@@ -1,20 +1,10 @@
-	push 10
-	call array_new
-
-	;push ds
-	push 0
-	push bx
-	push input
-	push 4	
-	call array_write	
-
+	invoke array_new, 10	
+	invoke array_write, 0, bx, input, 4
+	
 	;arg1 [bp+8] -> array index
 	;arg2 [bp+6] -> ptr to array
 	;arg4 [bp+4] -> size of read
-	push 0
-	push bx
-	push 3
-	call array_read
+	invoke array_read, 0, bx, 3
 	
 	;Heap starts at 7e0h 
 	mov dx, 7e0h

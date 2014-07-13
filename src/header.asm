@@ -9,12 +9,12 @@ start:
 	add ax, 288
     mov ss, ax
     mov sp, 4096
-
-	push welcome_string
-	call io_print_string
+	
+	invoke io_print_string, welcome_string
 
 .cli_loop:
-    call cli
+
+	invoke cli
     jmp .cli_loop
 
 	welcome_string db 'Welcome to ObjectOS 0.0.1!', 13, 10, 0

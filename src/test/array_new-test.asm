@@ -1,8 +1,7 @@
 ;Initialize bx to something so we can make sure array_new sets it	
 	mov bx, 99
-	push 10
-	call array_new
-	
+	invoke array_new, 10
+
 ;Assert that the return value in bx is pointing to the array
 	cmp bx, 0
 	jne fail

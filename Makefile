@@ -20,7 +20,7 @@ link-tests: check-for-test check-for-module
 	for dep in $(deps); do \
 	   fulldeps+=src/modules/$$dep.asm" "; \
 	done; \
-	cat src/test/fixture.asm src/test/$(test)-test.asm src/modules/$(module).asm $$fulldeps > build/kernel.asm
+	cat src/std.mac src/test/fixture.asm src/test/$(test)-test.asm src/modules/$(module).asm $$fulldeps > build/kernel.asm
 
 build-tests: link-tests 
 	../nasm-2.10.09/nasm -f bin -o build/kernel.bin build/kernel.asm
@@ -33,7 +33,7 @@ launch-tests: build-tests-kernel launch
 
 
 link-modules:
-	cat src/header.asm src/modules/*.asm > build/kernel.asm
+	cat src/std.mac src/header.asm src/modules/*.asm > build/kernel.asm
 
 build-source: link-modules
 	../nasm-2.10.09/nasm -f bin -o build/kernel.bin build/kernel.asm
