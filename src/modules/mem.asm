@@ -1,6 +1,6 @@
 mem_next_alloc dw 0
 
-;The handle for the new object is returned in bx
+;The memory ptr is returned in bx
 mem_alloc:
 	push bp
 	mov bp, sp
@@ -15,10 +15,16 @@ mem_alloc:
 	pop cx
 	pop bp
 	ret 2
-	
-;arg1 [bp+8] -> ptr to source data
-;arg2 [bp+6] -> ptr to dest data
-;arg3 [bp+4] -> number of bytes to write
+
+;Make sure you do this before the call so you get the right ds:
+;   push dx
+;	mov dx, 7e0h
+;	mov ds, dx
+;	pop dx
+
+;arg2 [bp+8] -> ptr to source data
+;arg3 [bp+6] -> ptr to dest data
+;arg4 [bp+4] -> number of bytes to write
 mem_write:
 	push bp
 	mov bp, sp
@@ -27,11 +33,11 @@ mem_write:
 	push cx
 	push dx
 	push es
-	
+		
 	mov cx, [bp+4]
 	mov bx, [bp+6]
 	mov si, [bp+8]
-
+	
 	;Make the object out of whatever is in DS:SI and store it in our object heap
     mov dx, 7e0h
     mov es, dx
@@ -40,13 +46,14 @@ mem_write:
 .copy:
     cmp cx, 0
     je .done
-    mov al,[si]
+	mov al,[si]
     inc si
-    stosb
+	stosb
     dec cx
     jmp .copy
-
+	
 .done:	
+	
 	pop es
 	pop dx
 	pop cx
