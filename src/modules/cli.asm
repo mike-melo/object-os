@@ -2,12 +2,8 @@ cli:
     push dx
     push di
 
-	push input_buffer
-	push 16
-    call io_clear_string
-
-    push prompt
-    call io_print_string
+	invoke io_clear_string, input_buffer, 16
+    invoke io_print_string, prompt
 
     ;Input size starts at 0
 	mov dx, 0
@@ -17,25 +13,26 @@ cli:
     jmp .echo
 
 .echo:
-    call io_get_keystroke
-    cmp al, 13
+	
+    invoke io_get_keystroke
+	
+	cmp al, 13
     je .newline
     stosb
     inc dx
-    call io_print_char
-    jmp .echo_loop
+    
+	invoke io_print_char
+	jmp .echo_loop
 
 .newline:
     mov al, 13
-    call io_print_char
-    mov al, 10
-    call io_print_char
+    invoke io_print_char
+	mov al, 10
+	invoke io_print_char
     sub dx, 2
 
-    push input_buffer
-	push dx
-	call parse
-    jmp .done
+    invoke parse, input_buffer, dx
+	jmp .done
 
 .done:
     pop di

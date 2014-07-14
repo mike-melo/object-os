@@ -3,9 +3,6 @@ array_new:
 	push bp
 	mov bp, sp
 	
-	;push word [bp+4] 
-	;call mem_alloc
-	
 	invoke mem_alloc, word [bp+4]
 	
 	pop bp

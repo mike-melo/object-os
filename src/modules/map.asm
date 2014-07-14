@@ -1,8 +1,7 @@
 map_array resw 16
 
-
 get_hashcode:
-	call custom_hash
+	invoke custom_hash
 	ret
 
 ;Need 32-bits for this
@@ -84,8 +83,7 @@ map_put:
 
 	mov dx, [bp+6] ;key_object
 
-	push dx
-	call get_hashcode
+	invoke get_hashcode, dx
 
 	xor dx, dx
 	mov ax, cx

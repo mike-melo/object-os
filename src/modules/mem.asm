@@ -69,13 +69,10 @@ mem_copy:
 
 	push bx
 
-	push word [bp+4]
-	call mem_alloc
-	
-	push word [bp+6] 		
-	push bx					;bx returned from mem_alloc is the destination
-	push word [bp+4]
-	call mem_write
+	invoke mem_alloc, word [bp+4]
+
+	;bx returned from mem_alloc is the destination
+	invoke mem_write, word [bp+6], bx, word [bp+4]
 	
 	pop bx
 	pop bp

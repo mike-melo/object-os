@@ -11,10 +11,8 @@ parse_string:
     jmp .loop
 
 .done:
-	push parse_token
-	push dx
-	call mem_copy
-
+	invoke mem_copy, parse_token, dx
+	
 	pop ax
     pop di
     ret
@@ -36,7 +34,7 @@ parse:
 	cmp al,'"'
 	jne .loop
 
-	call parse_string
+	invoke parse_string
 	jmp .loop
 	
 .done:

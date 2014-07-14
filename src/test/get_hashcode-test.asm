@@ -1,6 +1,6 @@
 	invoke custom_hash, input
 
-    cmp cx, 31567
+    cmp cx, 3156
 	je success
 	jmp fail
 	jmp $ 
