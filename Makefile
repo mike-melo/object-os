@@ -23,7 +23,7 @@ link-tests: check-for-test check-for-module
 	cat src/std.mac src/test/fixture.asm src/test/$(test)-test.asm src/modules/$(module).asm $$fulldeps > build/kernel.asm
 
 build-tests: link-tests 
-	../nasm-2.10.09/nasm -f bin -o build/kernel.bin build/kernel.asm
+	../nasm-2.10.09/nasm -f bin -o build/kernel.bin build/kernel.asm -l kernel.lst
 
 build-tests-kernel: build-tests build-boot link-kernel-and-boot
 	cp build/base.img build/kernel.img

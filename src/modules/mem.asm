@@ -25,7 +25,11 @@ mem_alloc:
 ;arg2 [bp+8] -> ptr to source data
 ;arg3 [bp+6] -> ptr to dest data
 ;arg4 [bp+4] -> number of bytes to write
-mem_write:
+@proc mem_write:
+	@paramword size
+	@paramword dest
+	@paramword source
+	
 	push bp
 	mov bp, sp
 	
@@ -34,9 +38,9 @@ mem_write:
 	push dx
 	push es
 		
-	mov cx, [bp+4]
-	mov bx, [bp+6]
-	mov si, [bp+8]
+	mov cx, size
+	mov bx, dest
+	mov si, source
 	
 	;Make the object out of whatever is in DS:SI and store it in our object heap
     mov dx, 7e0h
@@ -60,6 +64,7 @@ mem_write:
 	pop si
 	pop bp
 	ret 6
+@endproc
 
 ;arg1 [bp+6] -> source
 ;arg2 [bp+4] -> number of bytes to write

@@ -7,3 +7,35 @@
 	%endrep
 	call callee	
 %endmacro
+
+%macro @param 2
+	%define %1 [bp+%2]
+%endmacro
+
+%macro @paramword 1
+	%ifctx params
+		%assign %$bpoffset %$bpoffset+2
+		%assign %%mybpoffset %$bpoffset
+		%define %1 [bp+%%mybpoffset]
+	%else
+		%error "@proc must be declared" 
+	%endif
+%endmacro
+
+%macro @proc 1
+	%ifctx params
+		%error "A previous proc is missing an @endproc" 
+	%else
+		%push params
+		%assign %$bpoffset 2
+	%endif
+	%1
+%endmacro
+
+%macro @endproc 0
+	%ifctx params
+		%pop params 
+	%else
+		%error "This @endproc is an orphan; it needs to follow a @proc"
+	%endif
+%endmacro
